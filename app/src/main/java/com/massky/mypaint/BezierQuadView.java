@@ -97,13 +97,10 @@ public class BezierQuadView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //赛贝尔曲线-：Path.cubicTo和Path.rCubicTo，它们分别对应的是绝对坐标和相对坐标，两者是可以互相转换的。
-//        mPath.moveTo(mStartXPoint, mStartYPoint);
-//        mPath.cubicTo(mConOneXPoint, mConOneYPoint,mConTwoXPoint,mConTwoYPoint,mEndXPoint, mEndYPoint);
-//        canvas.drawPath(mPath, mPaint);
-
-        mPath.moveTo(mStartXPoint,mStartYPoint);
-        mPath.cubicTo(mConOneXPoint,mConOneYPoint,mConTwoXPoint,mConTwoYPoint,mEndXPoint,mEndYPoint);
-        canvas.drawPath(mPath,mPaint);
+        mPath.reset();
+        mPath.moveTo(mStartXPoint, mStartYPoint);
+        mPath.cubicTo(mConOneXPoint, mConOneYPoint, mConTwoXPoint, mConTwoYPoint, mEndXPoint, mEndYPoint);
+        canvas.drawPath(mPath, mPaint);
 
 
         //辅助线
@@ -127,10 +124,10 @@ public class BezierQuadView extends View {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_POINTER_DOWN:
                 mFlag = true;
-                break;
+                break;//第二个手指按下
             case MotionEvent.ACTION_POINTER_UP:
                 mFlag = false;
-                break;
+                break;//第二个手指抬起
             case MotionEvent.ACTION_MOVE:
                 mConOneXPoint = (int) event.getX(0);
                 mConOneYPoint = (int) event.getY(0);
@@ -141,8 +138,6 @@ public class BezierQuadView extends View {
                 invalidate();
                 break;
         }
-
-
         return true;
     }
 
